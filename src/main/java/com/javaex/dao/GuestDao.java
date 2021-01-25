@@ -1,15 +1,8 @@
 package com.javaex.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.sql.DataSource;
-
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -18,159 +11,29 @@ import com.javaex.vo.GuestVo;
 @Repository
 public class GuestDao {
 
-	@Autowired
-	private DataSource dateSource;
-	
-	// 0. import java.sql.*;
-	private Connection conn = null;
-	private PreparedStatement pstmt = null;
-	private ResultSet rs = null;
-	
-	private String driver = "oracle.jdbc.driver.OracleDriver";
-	private String url = "jdbc:oracle:thin:@localhost:1521:xe";
-	private String id = "webdb";
-	private String pw = "webdb";
-	private int count = 0;
-	
-	private void getConnection() {
-		try {
-			// 1. JDBC 드라이버 (Oracle) 로딩
-			conn=dateSource.getConnection();
-			
-			// 2. Connection 얻어오기
-			conn = DriverManager.getConnection(url, id, pw);
+	@Autowired // 자동으로 연결해 달라고
+	private SqlSession sqlSession;
 
-		} catch (SQLException e) {
-		    System.out.println("error:" + e);
-		} 
-	}
-	
-	private void close() {
-		// 5. 자원정리
-	    try {
-	        if (rs != null) {
-	            rs.close();
-	        }            	
-	    	if (pstmt != null) {
-	        	pstmt.close();
-	        }
-	    	if (conn != null) {
-	        	conn.close();
-	        }
-	    } catch (SQLException e) {
-	    	System.out.println("error:" + e);
-	    }
-	}
-	
+	// 전체리스트 가져오기
 	public List<GuestVo> getList() {
+		//why static?  --> 여기는 메소드 리턴형 쓰는 자리인데 메소드 다시한번 보세요
 		
-		List<GuestVo> guList = new ArrayList<GuestVo>();
-		
-		getConnection();
-		
-		try {		
-			// 3. SQL문 준비 / 바인딩 / 실행
-			String query="";
-			query +=" select	no,";
-			query +="			name,";
-			query +="			password,";
-			query +="			content,";
-			query +="			reg_date";
-			query +=" from guestbook";
-			
-			pstmt = conn.prepareStatement(query);
-			
-			rs = pstmt.executeQuery();
-			
-			// 4.결과처리
-			while(rs.next()) {
-				
-				int no = rs.getInt("no");
-				String name = rs.getString("name");
-				String password = rs.getString("password");
-				String content = rs.getString("content");
-				String regdate = rs.getString("reg_date");
-				GuestVo guVo = new GuestVo(no, name, password, content, regdate);
-				
-				guList.add(guVo);
-			}
-		} catch (SQLException e) {
-		    System.out.println("error:" + e);
-		}
-		
-		close();
-		
-		return guList;
-	}
-	
-	public int guestinsert(GuestVo guVo) {
-		
-		getConnection();
-		
-		try {		
-			// 3. SQL문 준비 / 바인딩 / 실행
-			String query="";
-			query +=" insert into guestbook";
-			query +=" values (seq_guest_id.nextval, ?, ?, ?, sysdate)";
-			
-			pstmt = conn.prepareStatement(query);
-			
-			pstmt.setString(1, guVo.getName());
-			pstmt.setString(2, guVo.getPassword());
-			pstmt.setString(3, guVo.getContent());
-			
-			count = pstmt.executeUpdate();
-			
-			// 4.결과처리
-			System.out.println("[DAO] : " +count+ "건 등록");
-			
-		} catch (SQLException e) {
-		    System.out.println("error:" + e);
-		}
-		
-		close();
-		
-		return count;
-	}
-	
-	public int guestdelete(GuestVo guVo) {
-		
-		getConnection();
-		
-		try {		
-			// 3. SQL문 준비 / 바인딩 / 실행
-			String query="";
-			query +=" DELETE FROM guestbook WHERE no = ? ";
-			query +=" and password =?";
-			pstmt = conn.prepareStatement(query);
-			
-			pstmt.setInt(1, guVo.getNo());
-			pstmt.setString(2, guVo.getPassword());
-			
-			count = pstmt.executeUpdate();
-			
-			// 4.결과처리
-			System.out.println("[DAO] : " +count+ "건 삭제");
-			
-		} catch (SQLException e) {
-		    System.out.println("error:" + e);
-		}
-		
-		close();
-		
-		return count;
-		
+		List<GuestVo> guestlist = sqlSession.selectList("guestbook.selectlist");
+		System.out.println("리스트가져옴");
+		return guestlist;
 	}
 
-	public void personDelete(int id2) {
-		// TODO Auto-generated method stub
-		
+	// 방명록 등록
+	public int GuestInsert(GuestVo guestVo) {
+		int count = sqlSession.insert("guestbook.guestinsert", guestVo);
+		return count;
 	}
+	//방명록 삭제
+	 public int guestDelete(GuestVo guestVo) {
+		 int count =sqlSession.delete("guestbook.delete", guestVo);
+		 return count;
+	 
+	 }
 
-	public void personInsert(GuestVo guestVo) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	
+
 }

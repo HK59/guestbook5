@@ -5,16 +5,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Insert title here ${pageContext.request.contextPath} </title>
 </head>
 <body>
 <form action="/guest/addlist" method="post">
 			<table border="1">
 				<tr>
 					<td>이름</td>
-					<td>${personVo.name}</td>
+					<td><input type="text" name="name"></td>
 					<td>비밀번호</td>
-					<td>${personVo.password}</td>
+					<td><input type="text" name="password"></td>
 				</tr>
 				<tr>
 					<td colspan="4"> <textarea name="content"> </textarea> </td>
@@ -26,16 +26,16 @@
 			</table>
 		</form>
 		<br>
-		<c:forEach items="${requestScope.glist}" var = "PersonVo">
+		<c:forEach items="${requestScope.glist}" var = "GuestVo">
 			<table border="1">
 				<tr>
-					<td>${PersonVo.no }</td>
-					<td>${PersonVo.name }</td>
-					<td>${PersonVo.regdate }</td>
+					<td>${guestVo.no}</td>
+					<td>${guestVo.name}</td>
+					<td>${guestVo.regdate}</td>
 					<td><a href="">[삭제]</a></td>
 				</tr>
 				<tr>
-					<td colspan="4">${PersonVo.content }</td>
+					<td colspan="4">${guestVo.content}</td>
 				</tr>
 	
 			</table>
