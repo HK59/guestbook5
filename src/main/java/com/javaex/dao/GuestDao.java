@@ -16,7 +16,6 @@ public class GuestDao {
 
 	// 전체리스트 가져오기
 	public List<GuestVo> getList() {
-		//why static?  --> 여기는 메소드 리턴형 쓰는 자리인데 메소드 다시한번 보세요
 		
 		List<GuestVo> guestlist = sqlSession.selectList("guestbook.selectlist");
 		System.out.println("리스트가져옴");
