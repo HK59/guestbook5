@@ -8,7 +8,7 @@
 <title>Insert title here ${pageContext.request.contextPath} </title>
 </head>
 <body>
-<form action="/guest/addlist" method="post">
+<form action="${pageContext.request.contextPath}/guest/addlist" method="post">
 			<table border="1">
 				<tr>
 					<td>이름</td>
@@ -26,7 +26,7 @@
 			</table>
 		</form>
 		<br>
-		<c:forEach items="${requestScope.glist}" var = "GuestVo">
+		<c:forEach items="${gList}" var = "GuestVo">
 			<table border="1">
 				<tr>
 					<td>${guestVo.no}</td>

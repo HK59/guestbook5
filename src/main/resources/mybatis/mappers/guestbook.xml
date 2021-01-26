@@ -5,7 +5,7 @@
 	<resultMap id="resultMapGuestVo" type="com.javaex.vo.GuestVo">
 		<result column="no" property="no" />
 		<result column="name" property="name" />
-		<result column="regdate" property="regdate" />
+		<result column="reg_date" property="regdate" />
 		<result column="content" property="content" />
 	</resultMap>
 
@@ -20,10 +20,11 @@
 		]]>
 	</select>
 
-	<insert id="guestinsert" parameterType="guestVo">
+	<insert id="guestinsert" parameterType="com.javaex.vo.GuestVo">
 		<![CDATA[
 			INSERT into guestbook
 			VALUES(SEQ_GUEST_ID.nextval,
+			#{no},
 			#{name},
 			#{password},
 			#{content},

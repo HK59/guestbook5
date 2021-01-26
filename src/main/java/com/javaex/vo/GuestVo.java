@@ -7,6 +7,16 @@ public class GuestVo {
 
 	//생성자
 	public GuestVo() {}
+	
+	
+
+	public GuestVo(int no, String name, String content, String regdate) {
+		super();
+		this.no = no;
+		this.name = name;
+		this.content = content;
+		this.regdate = regdate;
+	}
 	public GuestVo(int no, String name, String password, String content, String regdate) {
 		this.no = no;
 		this.name = name;

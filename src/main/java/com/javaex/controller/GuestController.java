@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.javaex.dao.GuestDao;
 import com.javaex.vo.GuestVo;
@@ -38,13 +38,9 @@ public class GuestController {
 
 	// 방명록 등록
 	@RequestMapping(value = "/addlist", method = { RequestMethod.GET, RequestMethod.POST })
-	public String addList(@RequestParam("no") int no, @RequestParam("name") String name,
-			@RequestParam("password") String password, @RequestParam("content") String content,
-			@RequestParam("regdate") String regdate) {
+	public String addList(@ModelAttribute GuestVo guestVo) {
 		System.out.println("addList");
-		GuestVo guestVo = new GuestVo(no, name, password, content, regdate);
 		System.out.println(guestVo.toString());
-		GuestDao guestDao = new GuestDao();
 		guestDao.GuestInsert(guestVo);
 
 		return "redirect:/guest/list";
@@ -57,7 +53,7 @@ public class GuestController {
 	  @RequestMapping(value = "/deleteForm", method = { RequestMethod.GET,
 	  RequestMethod.POST }) public String deleteForm() {
 	  
-	 System.out.println("deleteForm");
+	 System.out.println("deleteF");
 	  
 	 return "deleteForm";
 	 

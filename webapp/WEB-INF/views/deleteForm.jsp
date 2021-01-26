@@ -8,7 +8,7 @@
 <title>Insert title here${pageContext.request.contextPath}</title>
 </head>
 <body>
-	<form action="/guestbook3/guest" method="post">
+	<form action="/guestbook5/guest" method="post">
 			비밀번호 <input type="text" name="password">
 			<button type="submit">확인</button><br>
 			<input type="hidden" name="no" value="${param.no}">
