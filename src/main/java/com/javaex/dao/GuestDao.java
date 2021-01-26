@@ -25,6 +25,7 @@ public class GuestDao {
 	// 방명록 등록
 	public int GuestInsert(GuestVo guestVo) {
 		int count = sqlSession.insert("guestbook.guestinsert", guestVo);
+		System.out.println("insert");
 		return count;
 	}
 	//방명록 삭제

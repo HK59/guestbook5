@@ -14,8 +14,9 @@
   		<![CDATA[
 			SELECT  no,
 		        	name,
-		        	regdate,
-		        	content
+		        	password,
+		        	content,
+		        	sysdate
 			FROM guestbook
 		]]>
 	</select>
@@ -24,10 +25,10 @@
 		<![CDATA[
 			INSERT into guestbook
 			VALUES(SEQ_GUEST_ID.nextval,
-			#{no},
-			#{name},
-			#{password},
-			#{content},
+			no,
+			name,
+			password,
+			content,
 			sysdate)
 		]]>
 	</insert>
