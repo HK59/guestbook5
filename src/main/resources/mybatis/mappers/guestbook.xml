@@ -13,10 +13,9 @@
 	<select id="selectlist" resultType="com.javaex.vo.GuestVo">
   		<![CDATA[
 			SELECT  no,
-		        	name,
+			        name,
 		        	password,
-		        	content,
-		        	sysdate
+		        	content
 			FROM guestbook
 		]]>
 	</select>
@@ -25,11 +24,10 @@
 		<![CDATA[
 			INSERT into guestbook
 			VALUES(SEQ_GUEST_ID.nextval,
-			no,
-			name,
-			password,
-			content,
-			sysdate)
+			#{no},
+			#{name},
+			#{password},
+			#{content})
 		]]>
 	</insert>
 		
