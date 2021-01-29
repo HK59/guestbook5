@@ -53,7 +53,8 @@ public class GuestController {
 	 //방명록 삭제 폼 deleteForm
 	 
 	  @RequestMapping(value = "/deleteForm", method = { RequestMethod.GET,
-	  RequestMethod.POST }) public String deleteForm() {
+	  RequestMethod.POST }) 
+	  public String deleteForm() {
 	  
 	 System.out.println("delete");
 	  
@@ -67,7 +68,7 @@ public class GuestController {
 	 // 삭제 --> delete --> @PathVariable
 
 		@RequestMapping(value = "/delete/{password}", method = {RequestMethod.GET, RequestMethod.POST}) 
-		public String delete2(@PathVariable("password") GuestVo password) {
+		public String delete(@PathVariable("password") GuestVo password) {
 			System.out.println("delete"); 
 			System.out.println("password");
 
