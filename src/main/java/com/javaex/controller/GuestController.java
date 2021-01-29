@@ -27,21 +27,23 @@ public class GuestController {
 
 		// dao를 통해 리스트 를 가져온다. 
 		//여기도 보세요 어떻게 다른지
-		List<GuestVo> guestlist = guestDao.getList();
+		//List<GuestVo> guestList = guestDao.getList(); ----> 서비스로 이동 
 		//List<GuestVo> guestlist = GuestDao.getList();
 
+		//System.out.println("controller list = " + guestList);// 보내기전 확인작업
 		// model -->data 를 보내는 방법 -->담아 놓으면 된다
-		model.addAttribute("gList", guestlist);
+		//model.addAttribute("guestList", guestList); ---> 서비스로 이동 
 
-		return "addList";
+		return "list";
 	}
+
 
 	// 방명록 등록
 	@RequestMapping(value = "/addlist", method = { RequestMethod.GET, RequestMethod.POST })
 	public String addList(@ModelAttribute GuestVo guestVo) {
 		System.out.println("addList");
 		System.out.println(guestVo.toString());
-		guestDao.GuestInsert(guestVo);
+		//guestDao.GuestInsert(guestVo); ---> 서비스로 이동 
 
 		return "redirect:/guest/list";
 
@@ -53,7 +55,7 @@ public class GuestController {
 	  @RequestMapping(value = "/deleteForm", method = { RequestMethod.GET,
 	  RequestMethod.POST }) public String deleteForm() {
 	  
-	 System.out.println("deleteF");
+	 System.out.println("delete");
 	  
 	 return "deleteForm";
 	 
@@ -65,15 +67,17 @@ public class GuestController {
 	 // 삭제 --> delete --> @PathVariable
 
 		@RequestMapping(value = "/delete/{password}", method = {RequestMethod.GET, RequestMethod.POST}) 
-		public String delete2(@PathVariable("password") GuestVo password) { System.out.println("delete"); System.out.println("password");
+		public String delete2(@PathVariable("password") GuestVo password) {
+			System.out.println("delete"); 
+			System.out.println("password");
 
-		GuestDao guestDao = new GuestDao();guestDao.guestDelete(password);
+		//GuestDao guestDao = new GuestDao();guestDao.guestDelete(password); ---> 서비스로 이동 
 
 		return"redirect:/guest/list";
 		
 		}
 
-
+*/
 	// 메소드 게터 세터
 
 	// 메소드 일반

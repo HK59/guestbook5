@@ -2,21 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="guestbook">
-	<resultMap id="resultMapGuestVo" type="com.javaex.vo.GuestVo">
-		<result column="no" property="no" />
-		<result column="name" property="name" />
-		<result column="reg_date" property="regdate" />
-		<result column="content" property="content" />
+	
+	<resultMap type="guestVo" id="resultMapGuestVo">
+		<result column = "no" property = "no"/>
+		<result column = "name" property = "name"/>
+		<result column = "password" property = "password"/>
+		<result column = "content" property = "content"/>
+		<result column = "reg_date" property = "regDate"/>
+	
 	</resultMap>
 
     
-	<select id="selectlist" resultType="com.javaex.vo.GuestVo">
+	<select id="selectlist" resultMap="resultMapGuestVo">
   		<![CDATA[
-			SELECT  no,
-			        name,
-		        	password,
-		        	content
-			FROM guestbook
+			<![CDATA[
+			select no,
+   				   name,
+ 			       password,
+  			       content,
+  			       reg_date
+			from guestbook
 		]]>
 	</select>
 
